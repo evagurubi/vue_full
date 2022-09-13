@@ -47,7 +47,7 @@ toggleModal() {
 ********************************************************* -->
 
 <template>
-  <div class="firstattempt">
+  
 
     <h1>{{title}}</h1>
     <input type="text" ref="name">
@@ -56,10 +56,30 @@ toggleModal() {
     <p>Welcome...</p>
    
     <div v-if="showModal">
-      <Modal :header="header" :text="text" theme="sale" @close="toggleModal"/>
+      <Modal theme="sale" @close="toggleModal">
+      <!-- slots pass templates to components so they're not a replacement for props -->
+      <template v-slot:links>
+        <a href="#">sign up now</a>
+        <a href="#">more info</a>
+      </template>
+      <h1>Modal Title</h1>
+      <p>Additional remarks</p>
+      </Modal>
+    </div>
+    <div v-if="showModalTwo">
+      <Modal @close="toggleModalTwo">
+      <!-- slots pass templates to components so they're not a replacement for props -->
+      <template v-slot:links>
+        <a href="#">sign up now 2</a>
+        <a href="#">more info 2</a>
+      </template>
+      <h1>Modal Two Title</h1>
+      <p>Additional remarks for Modal Two</p>
+      </Modal>
     </div>
     <button @click.alt="toggleModal">OPEN MODAL (alt)</button>
-  </div>
+    <br/>
+    <button @click="toggleModalTwo">OPEN MODAL TWO</button>
   
 </template>
 
@@ -75,7 +95,8 @@ export default {
       title: "My First Vue App :)", 
       header: "Sign up for the Giveaway!",
       text:"Something silly", 
-      showModal: false
+      showModal: false, 
+      showModalTwo: false,
     }
   },
   methods: {
@@ -86,6 +107,9 @@ handleClick() {
 }, 
 toggleModal() {
   this.showModal = !this.showModal
+},
+toggleModalTwo() {
+  this.showModalTwo = !this.showModalTwo
 }
   }
   
